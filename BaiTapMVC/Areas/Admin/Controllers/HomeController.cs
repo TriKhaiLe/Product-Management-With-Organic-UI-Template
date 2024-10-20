@@ -10,5 +10,13 @@ namespace BaiTapMVC.Areas.Admin.Controllers
         {
             return View();      
         }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            HttpContext.Session.Remove("UserName");
+            return RedirectToAction("Login", "Account", new { area = "" });
+        }
+
     }
 }
