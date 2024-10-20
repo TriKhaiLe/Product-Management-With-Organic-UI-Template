@@ -28,7 +28,9 @@ namespace QuanLySanPhamAPI
             app.UseAuthorization();
 
 
-            app.MapControllers();
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Access}/{ action = Login}/{id?}");
 
             app.Run();
         }

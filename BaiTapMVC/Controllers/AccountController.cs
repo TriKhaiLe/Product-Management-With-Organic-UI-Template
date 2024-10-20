@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using BaiTapMVC.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -7,10 +8,39 @@ namespace BaiTapMVC.Controllers
 {
     public class AccountController : Controller
     {
+        [HttpGet]
         public IActionResult Login()
         {
+            if (HttpContext.Session.GetString("UserName") == null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Login(Account account)
+        {
+            if (HttpContext.Session.GetString("UserName") == null)
+            {
+                HttpContext.Session.SetString("UserName", account.UserName);
+
+                if (account.UserName == "admin")
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Admin" });
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
             return View();
         }
+
+
         public IActionResult ConfirmLogin()
         {
             string userName = Request.Form["UserName"];

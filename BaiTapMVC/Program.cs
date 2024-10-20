@@ -13,7 +13,7 @@ namespace BaiTapMVC
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-
+            builder.Services.AddSession();
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -42,6 +42,7 @@ namespace BaiTapMVC
 
             app.UseAuthorization();
 
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -52,7 +53,7 @@ namespace BaiTapMVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Product}/{action=Index}/{id?}");
+                pattern: "{controller=Account}/{action=Login}/{id?}");
 
             app.Run();
         }
